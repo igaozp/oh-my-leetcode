@@ -1,0 +1,10 @@
+SELECT T.name AS Department, E.name AS Employee, T.maxSalary AS Salary
+FROM Employee E,
+  (SELECT
+    D.name,
+    D.id,
+    MAX(E.salary) AS maxSalary
+   FROM Department D
+     INNER JOIN Employee E ON E.departmentId = D.id GROUP BY D.id
+  ) AS T
+WHERE E.salary = T.maxSalary AND E.departmentId = T.id
